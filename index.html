@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electricity Bill Calculator</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf2f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #aaa;
+        }
+
+        h2 {
+            text-align: center;
+            color: #075985;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #aaa;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 18px;
+            border: none;
+            border-radius: 7px;
+            background: #0284c7;
+            color: white;
+            font-size: 16px;
+        }
+
+        .reset {
+            background: #64748b;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #dcfce7;
+            border-radius: 8px;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>⚡ Electricity Bill Calculator</h2>
+
+    <label>Customer Name</label>
+    <input type="text" id="name"
+    placeholder="Enter your name">
+
+    <label>Consumer Number</label>
+    <input type="text" id="number"
+    placeholder="Enter consumer number">
+
+    <label>Units Consumed</label>
+    <input type="number" id="units"
+    placeholder="Enter electricity units"
+    min="0" step="1">
+
+    <button onclick="calculateBill()">
+        Calculate Bill
+    </button>
+
+    <button class="reset" onclick="resetBill()">
+        Reset
+    </button>
+
+    <div id="result"></div>
+
+    <footer>
+        Electricity Bill Calculator Project
+    </footer>
+
+</div>
+
+<script>
+
+function calculateBill() {
+
+    let name = document.getElementById("name").value.trim();
+    let number = document.getElementById("number").value.trim();
+    let unitInput = document.getElementById("units").value;
+    let units = Number(unitInput);
+
+    if (name === "" || number === "" ||
+        unitInput === "" ||
+        !Number.isFinite(units) ||
+        units < 0 || !Number.isInteger(units)) {
+
+        alert("Please enter valid details!");
+        return;
+    }
+
+    let bill;
+
+    if (units <= 100) {
+        bill = units * 1.5;
+    }
+    else if (units <= 200) {
+        bill = 150 + (units - 100) * 2.5;
+    }
+    else {
+        bill = 400 + (units - 200) * 4;
+    }
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("result").innerHTML =
+        "<h3>Bill Details</h3>" +
+        "<p>Customer: " + name + "</p>" +
+        "<p>Consumer Number: " + number + "</p>" +
+        "<p>Units Consumed: " + units + "</p>" +
+        "<h3>Total Bill: ₹" + bill.toFixed(2) + "</h3>";
+}
+
+function resetBill() {
+
+    document.getElementById("name").value = "";
+    document.getElementById("number").value = "";
+    document.getElementById("units").value = "";
+
+    document.getElementById("result").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
